@@ -64,7 +64,7 @@ kubectl apply -f votingapp/k8s/redis.yaml
 ### 3. Deploy Backend API
 
 ```bash
-kubectl apply -f k8s/backend.yaml
+kubectl apply -f votingapp/k8s/backend.yaml
 ```
 
 ---
@@ -72,7 +72,7 @@ kubectl apply -f k8s/backend.yaml
 ### 4. Deploy Frontend
 
 ```bash
-kubectl apply -f k8s/frontend.yaml
+kubectl apply -f votingapp/k8s/frontend.yaml
 ```
 
 ---
