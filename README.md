@@ -39,11 +39,26 @@ minikube addons enable metrics-server
 ---
 
 ### 2. Deploy Redis
+- First upload the 3 folders, frontend, backend, and k8s to a storage bucket called _votingapp_
+- Get your vm connected to Google Cloud Storage
+- 1. Find the service account for your vm
+- 2. Then run the following command in your google cloud console (not the vm console) to give your vm access to the cloud storage bucket
 
 ```bash
-kubectl apply -f k8s/redis.yaml
+gcloud storage buckets add-iam-policy-binding gs://YOUR_BUCKET_NAME \
+    --member="serviceAccount:MY_VM_SERVICE_ACCOUNT" \
+    --role="roles/storage.objectViewer" # Or objectCreator, objectAdmin, etc.
 ```
 
+- then copy over all of these files to your vm
+
+```bash
+gsutil cp -r gs://votingapp /home/YOUR_ACCOUNT/
+```
+
+```bash
+kubectl apply -f votingapp/k8s/redis.yaml
+```
 ---
 
 ### 3. Deploy Backend API
