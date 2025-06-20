@@ -1,6 +1,6 @@
-# 🗳️ Real-Time Voting App on Kubernetes (Minikube)
+# 🗳️ Real-Time Voting App on Kubernetes
 
-This project deploys a real-time voting application using Kubernetes on Minikube. It demonstrates a microservice architecture with autoscaling enabled for the backend API using Horizontal Pod Autoscaler (HPA).
+This project deploys a real-time voting application using Kubernetes. It demonstrates a microservice architecture with autoscaling enabled for the backend API using Horizontal Pod Autoscaler (HPA).
 
 ---
 
@@ -20,8 +20,7 @@ This project deploys a real-time voting application using Kubernetes on Minikube
 
 ## ✅ Prerequisites
 
-- Linux VM with at least 2 vCPUs (e.g. GCP `e2-standard-2`)
-- Minikube and kubectl installed
+- GKE cluster created
 - Docker installed for building/pushing images
 - Optional: `hey` or `k6` for load testing
 
@@ -36,28 +35,18 @@ This project deploys a real-time voting application using Kubernetes on Minikube
       - name: backend
         image: yourdockerusername/backend:latest
 
-### 1. Start Minikube
+### 1. Open your Cloud Console
 
 ```bash
-minikube start
-minikube addons enable metrics-server
+gcloud config list
+gcloud container clusters get-credentials votingapp --region YOUR_CLUSTER_REGION --project YOUR_PROJECT_ID
 ```
 
 ---
 
 ### 2. Deploy Redis
-- First upload the 3 folders, frontend, backend, and k8s to a storage bucket called _votingapp_
-- Get your vm connected to Google Cloud Storage
-- 1. Find the service account for your vm
+- 1. Make sure you uploaded the 3 folders, frontend, backend, and k8s to a storage bucket called _votingapp_
 - 2. Then run the following command in your google cloud console (not the vm console) to give your vm access to the cloud storage bucket
-
-```bash
-gcloud storage buckets add-iam-policy-binding gs://YOUR_BUCKET_NAME \
-    --member="serviceAccount:MY_VM_SERVICE_ACCOUNT" \
-    --role="roles/storage.objectViewer" # Or objectCreator, objectAdmin, etc.
-```
-
-- then copy over all of these files to your vm
 
 ```bash
 gsutil cp -r gs://votingapp /home/YOUR_ACCOUNT/
@@ -111,13 +100,13 @@ docker push your-dockerhub-username/frontend:latest
 ### 7. Port-forward Frontend to Access
 
 ```bash
-kubectl port-forward service/frontend 8080:80
+kubectl get service frontend -n default
 ```
 
 Open your browser and visit:
 
 ```
-http://localhost:8080
+http://<EXTERNAL_IP>
 ```
 
 ---
