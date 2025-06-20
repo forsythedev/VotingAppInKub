@@ -29,6 +29,13 @@ This project deploys a real-time voting application using Kubernetes on Minikube
 
 ## 🏁 Setup Instructions
 
+- go to your frontend and backend yaml files in the k8s folder
+- change where it says yourdockerusename to yourdockerusername
+- spec:
+      containers:
+      - name: backend
+        image: yourdockerusername/backend:latest
+
 ### 1. Start Minikube
 
 ```bash
