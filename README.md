@@ -92,8 +92,8 @@ kubectl top pods
 Replace `your-dockerhub-username` with your Docker Hub username.
 
 ```bash
-docker build -t your-dockerhub-username/backend:latest ./backend
-docker build -t your-dockerhub-username/frontend:latest ./frontend
+docker build -t your-dockerhub-username/votingapp/backend:latest ./backend
+docker build -t your-dockerhub-username/votingapp/frontend:latest ./frontend
 
 docker push your-dockerhub-username/backend:latest
 docker push your-dockerhub-username/frontend:latest
